@@ -94,6 +94,12 @@ angular.module('starter.controllers', [])
     { title: 'Photography', id: 5 },
     { title: 'Technical Writing', id: 6 }
   ];
+
+  $scope.pubCourses = [
+    { title: 'Introduction to Biology', id: 1 },
+    { title: 'Graph Theory', id: 2 },
+    { title: 'Linear Algebra', id: 3 },
+  ];
 })
 
 .controller('QuizCtrl', function($scope, $stateParams, $interval, socket) {

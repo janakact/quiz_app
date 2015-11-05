@@ -1,5 +1,6 @@
 <ion-view view-title="Courses" >
   <ion-content>
+    <!-- section to show courses given from the institutes-->
     <div class="page-header">
       <h5 class="text-center"><b>My Courses</b></h5>
     </div>
@@ -10,8 +11,30 @@
       </ion-item>
     </ion-list>
 
+    <!-- scroll bar-->
+    <ion-scroll direction="x" class="available-scroller">
+      <div class="photo" collection-repeat="photo in main.photos"
+           item-height="250" item-width="photo.width + 30">
+        <img ng-src="">
+      </div>
+    </ion-scroll>
+
+    <!-- section to show courses subscribed from public courses-->
     <div class="page-header">
       <h5 class="text-center"><b>Subscribed Public Courses</b></h5>
     </div>
+
+    <ion-list>
+      <ion-item ng-repeat="course in pubCourses" href="#/app/courses/{{course.id}}">
+        {{course.title}}
+      </ion-item>
+
+      <div class="ion-item" style="float:none; text-align: center">
+        <button class="button button-small button-energized">
+          <i class="icon ion-ios-plus-outline"></i>
+        </button>
+      </div>
+
+    </ion-list>
   </ion-content>
 </ion-view>
