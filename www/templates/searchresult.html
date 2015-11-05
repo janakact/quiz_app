@@ -6,7 +6,7 @@
     </label>
     <ion-list>
       <ion-item ng-repeat="quiz in quizes|filter:searchText" href="#/app/quiz/{{quiz.id}}">
-        {{quiz.title}}
+        {{quiz.title}} <span class="badge badge-energized">{{quiz.courseId}}</span>
       </ion-item>
     </ion-list>
   </ion-content>

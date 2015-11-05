@@ -229,6 +229,8 @@ angular.module('starter.controllers', [])
     $location.path('/app/searchresult');
   }
 
+
+
   })
 
 
@@ -273,7 +275,7 @@ angular.module('starter.controllers', [])
 
       for(var i=0; i<data.length;i++)
       {
-        quizes.push({title:data[i].Name,id:data[i].QuizID,time:data[i].Time});
+        quizes.push({title:data[i].Name,id:data[i].QuizID,time:data[i].Time,courseId:data[i].CourseID});
       }
       $scope.quizes = quizes;
       $scope.$apply();

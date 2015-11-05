@@ -14,7 +14,7 @@
       <div class="item item-energized">
         Quiz Suggestions
         </div>
-        <a href="#/app/quiz/{{item.id}}" class="item" ng-repeat="item in suggestedQuizes">
+        <a href="#/app/quiz/{{item.id}}" class="item" ng-repeat="item in suggestedQuizes | limitTo:3 ">
         {{item.title}}
         </a>
     </div>

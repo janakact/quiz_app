@@ -1,8 +1,9 @@
 <ion-view view-title="Quizzes" >
   <ion-content>
     <ion-list>
+      {{data}}
       <ion-item ng-repeat="quiz in quizes" href="#/app/quiz/{{quiz.id}}">
-        {{quiz.title}}
+        {{quiz.title}}<span class="badge badge-balanced">{{quiz.time}}</span>
       </ion-item>
     </ion-list>
   </ion-content>
