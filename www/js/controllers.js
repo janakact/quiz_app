@@ -71,21 +71,8 @@ angular.module('starter.controllers', [])
     $timeout(function(){
       $scope.progressValue = amt;
     }, 200);
-
-
   })
 
-.controller('QuizlistCtrl', function($scope) {
-
-    $scope.quizes = [
-      { title: 'Say Hello', id: 35 },
-      { title: 'Print the String', id: 2 },
-      { title: 'IPv4', id: 3 },
-      { title: 'Play with integers', id: 4 },
-      { title: 'Time Game', id: 5 },
-      { title: 'LAN', id: 6 }
-    ];
-  })
 
 .controller('CourseCtrl', function($scope) {
   $scope.courses = [
@@ -216,12 +203,52 @@ angular.module('starter.controllers', [])
     //}
 })
 
-.controller('HomeCtrl', function($scope, $stateParams) {
+.controller('HomeCtrl', function($scope, $stateParams,socket) {
 
-  $scope.suggestedQuestions = [{title:'A/L Chemestry a sample paper',id:35},{title:"haha Lol paper",id:35}];
+  socket.emit('allQuiz',{});
+  socket.on('showQuiz',function(data) {
+    if(typeof(data.QuizID) !== 'undefined' )   return;
+    $scope.data = data;
+    var quizes = [];
+
+    for(var i=0; i<data.length;i++)
+    {
+          quizes.push({title:data[i].Name,id:data[i].QuizID,time:data[i].Time});
+    }
+    $scope.suggestedQuizes = quizes;
+    $scope.$apply();
+    });
+  //Dumy data
+  //$scope.suggestedQuizes = [{title:'A/L Chemestry a sample paper',id:35},{title:"haha Lol paper",id:35}];
   $scope.recentAttempts = [{title:'A/L Chemestry sample paper',result:1,count:3},{title:"haha Lol paper",result:3,count:3},{title:'A/L Chemestry sample paper',result:3,count:3}]
 
 
+  })
+
+
+  .controller('QuizlistCtrl', function($scope,socket) {
+    socket.emit('allQuiz',{});
+    socket.on('showQuiz',function(data) {
+      if(typeof(data.QuizID) !== 'undefined' )   return;
+      $scope.data = data;
+      var quizes = [];
+
+      for(var i=0; i<data.length;i++)
+      {
+        quizes.push({title:data[i].Name,id:data[i].QuizID,time:data[i].Time});
+      }
+      $scope.quizes = quizes;
+      $scope.$apply();
+    });
+
+    //$scope.quizes = [
+    //  { title: 'Say Hello', id: 35 },
+    //  { title: 'Print the String', id: 2 },
+    //  { title: 'IPv4', id: 3 },
+    //  { title: 'Play with integers', id: 4 },
+    //  { title: 'Time Game', id: 5 },
+    //  { title: 'LAN', id: 6 }
+    //];
   })
 
   .controller('ResultCtrl', function($scope, $stateParams) {

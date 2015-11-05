@@ -9,11 +9,12 @@
         </label>
       </div>
     </div>
+    <!--{{data.length}}{{data}}-->
     <div class="card">
       <div class="item item-energized">
         Quiz Suggestions
         </div>
-        <a href="#/app/quiz/{{item.id}}" class="item" ng-repeat="item in suggestedQuestions">
+        <a href="#/app/quiz/{{item.id}}" class="item" ng-repeat="item in suggestedQuizes">
         {{item.title}}
         </a>
     </div>
