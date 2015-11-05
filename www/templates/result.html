@@ -1,15 +1,16 @@
-<ion-view view-title="Result">
+<ion-modal-view>
+  <ion-header-bar>
+    <h1 class="title">Result</h1>
+  </ion-header-bar>
   <ion-content>
-	<div class="card card-balanced">
-	  <a href="#" class="item item-icon-left  item-balanced">
-	    <i class="icon ion-android-pin"></i>
-	  Success
-	  </a>
-
-	 <div class="item item-text-wrap">
-	    10/10 Test Cases passed.
-	  </div>
-
-	</div>
+    <div class="card">
+      <div class="item item-energized">
+      Results
+      </div>
+      <div class="item ">
+        {{result}} / {{questions.length}} Questions are correct.
+        <button style="float: right;" class="button button-small button-energized" ng-click="closeResults()">Close</button>
+      </div>
+    </div>
   </ion-content>
-</ion-view>
+</ion-modal-view>
