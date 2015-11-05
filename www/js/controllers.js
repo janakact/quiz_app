@@ -76,7 +76,7 @@ angular.module('starter.controllers', [])
 
 .controller('QuizlistCtrl', function($scope) {
   $scope.quizes = [
-    { title: 'Say Hello', id: 1 },
+    { title: 'Say Hello', id: 35 },
     { title: 'Print the String', id: 2 },
     { title: 'What Ever', id: 3 },
     { title: 'Play with integers', id: 4 },
@@ -85,22 +85,56 @@ angular.module('starter.controllers', [])
   ];
 })
 
-.controller('QuizCtrl', function($scope, $stateParams, $interval, socket) {
-    $scope.quizTitle = $stateParams.quizId;
-    $scope.questions = [{description:'Why Nadun is crazy?',options:['He is not','How could I know?','Who cares']},{description:'Why Nadun is crazy?',options:['He is not','How could I know?','Who cares']},{description:'Ho Nadun is crazy?',options:['He is not','How could I know?','Who cares']}];
-    $scope.qIndex = 0;
-    $scope.time = 100; //seconds
-    $scope.timeElapsed = 0;
+.controller('QuizCtrl', function($scope,$ionicModal, $stateParams, $interval, socket) {
+  //Dummmy data
+  //  $scope.questions = [{description:'Why Nadun is crazy?',options:['He is not','How could I know?','Who cares']},{description:'Why Nadun is crazy?',options:['He is not','How could I know?','Who cares']},{description:'Ho Nadun is crazy?',options:['He is not','How could I know?','Who cares']}];
+  //  $scope.qIndex = 0;
+  //  $scope.time = 100; //seconds
+  //
+  //  $scope.data = "haha";
 
-    $scope.timeFunction = $interval(function(){
-      if($scope.timeElapsed<$scope.time){
-        $scope.timeElapsed++;
+
+
+  $scope.quizId = $stateParams.quizId;
+  socket.emit('getQuiz',{qid:$scope.quizId});
+
+
+  // Create the login modal that we will use later
+  $ionicModal.fromTemplateUrl('templates/result.html', {
+    scope: $scope
+  }).then(function(modal) {
+    $scope.resultModal = modal;
+  });
+
+
+
+    socket.on('showQuiz',function(data)
+    {
+      ///Add retur if ids not match
+      $scope.data = data;
+      $scope.questions = [];
+      var questions = data.Questions;
+      for(var i=0; i<questions.length;i++)
+      {
+        q = questions[i];
+        $scope.questions.push({description:q.Q ,options: q.O, answer: q.A});
       }
-      else {
-        $scope.submit();
-        $interval.cancel($scope.timeFunction);
-      }
-    },1000);
+
+      //Statr timer
+      $scope.timeElapsed = 0;
+      $scope.timeFunction = $interval(function(){
+        if($scope.timeElapsed<$scope.time){
+          $scope.timeElapsed++;
+        }
+        else {
+          $scope.submit();
+          $interval.cancel($scope.timeFunction);
+        }
+      },1000);
+
+    });
+
+
 
 
     $scope.prev = function()
@@ -110,17 +144,21 @@ angular.module('starter.controllers', [])
 
     $scope.next = function()
     {
+
       $scope.qIndex++;
     };
     //data
     $scope.submit = function()
     {
-      var answers = [];
+      var result = 0;
       for(var i=0; i<$scope.questions.length;i++)
       {
-        answers.push($scope.questions[i].selection);
+        if($scope.questions[i].selection==$scope.questions[i].answer)
+          result++;
       }
-      socket.emit('quiz-submit',{})
+      socket.emit('sendResult',{result:result,qId:quizId});
+      $scope.result = result;
+      $scope.resultModal.show();
     }
 
     //
@@ -151,7 +189,8 @@ angular.module('starter.controllers', [])
   .factory('socket',function(){
     //Create socket and connect to http://chat.socket.io
     //var myIoSocket = io.connect('http://localhost:3000');
-    var myIoSocket = io.connect('https://codegameserver.herokuapp.com');
+    //var myIoSocket = io.connect('https://codegameserver.herokuapp.com');
+    var myIoSocket = io.connect('http://104.131.189.142:3000');
 
 
     return myIoSocket;
