@@ -33,6 +33,7 @@ angular.module('starter.controllers', [])
     $scope.modal.show();
   };
 
+
   // Perform the login action when the user submits the login form
   //$scope.doLogin = function() {
   //  console.log('Doing login', $scope.loginData);
@@ -111,11 +112,19 @@ angular.module('starter.controllers', [])
   socket.emit('getQuiz',{qid:$scope.quizId});
 
 
-  // Create the login modal that we will use later
+  // ------------------Models
   $ionicModal.fromTemplateUrl('templates/result.html', {
     scope: $scope
   }).then(function(modal) {
     $scope.resultModal = modal;
+  });
+  // Create the login modal that we will use later
+  $ionicModal.fromTemplateUrl('templates/loading.html', {
+    scope: $scope
+  }).then(function(modal) {
+    $scope.loadingModel = modal;
+    $scope.loadingModel.show();
+
   });
 
 
@@ -143,6 +152,7 @@ angular.module('starter.controllers', [])
           $interval.cancel($scope.timeFunction);
         }
       },1000);
+      $scope.loadingModel.hide();
 
     });
 
@@ -196,7 +206,8 @@ angular.module('starter.controllers', [])
 
 .controller('HomeCtrl', function($scope, $stateParams) {
 
-  $scope.suggestedQuestions = [{title:'A/L Chemestry sample paper',id:0},{title:"haha Lol paper",id:1}];
+  $scope.suggestedQuestions = [{title:'A/L Chemestry a sample paper',id:35},{title:"haha Lol paper",id:35}];
+  $scope.recentAttempts = [{title:'A/L Chemestry sample paper',result:1,count:3},{title:"haha Lol paper",result:3,count:3},{title:'A/L Chemestry sample paper',result:3,count:3}]
 
 
   })
@@ -214,3 +225,5 @@ angular.module('starter.controllers', [])
 
     return myIoSocket;
   });
+
+
