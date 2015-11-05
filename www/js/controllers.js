@@ -100,7 +100,7 @@ angular.module('starter.controllers', [])
   ];
 })
 
-.controller('QuizCtrl', function($scope,$ionicModal, $stateParams, $interval, socket) {
+.controller('QuizCtrl', function($scope,$ionicModal, $stateParams, $interval, $location,socket) {
   //Dummmy data
   //  $scope.questions = [{description:'Why Nadun is crazy?',options:['He is not','How could I know?','Who cares']},{description:'Why Nadun is crazy?',options:['He is not','How could I know?','Who cares']},{description:'Ho Nadun is crazy?',options:['He is not','How could I know?','Who cares']}];
     $scope.qIndex = 0;
@@ -186,6 +186,7 @@ angular.module('starter.controllers', [])
 
     $scope.closeResults = function()
     {
+      $location.path('/');
       $scope.resultModal.hide();
     }
 
