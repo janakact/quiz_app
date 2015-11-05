@@ -1,6 +1,7 @@
 <ion-view view-title="Home" class="bar-calm">
   <ion-content>
 
+
     <div class="card">
       <div class="item item-energized">
         <label class="item item-input">
@@ -9,6 +10,7 @@
         </label>
       </div>
     </div>
+
     <!--{{data.length}}{{data}}-->
     <div class="card">
       <div class="item item-energized">
@@ -27,6 +29,16 @@
       <div class="item" ng-repeat="item in recentAttempts">
         {{item.title}}<span class="badge badge-balanced">{{item.result}}/{{item.count}}</span>
       </div>
+    </div>
+
+    <!--{{data.length}}{{data}}-->
+    <div class="card">
+      <div class="item item-energized">
+        Quiz Suggestions
+        </div>
+        <a href="#/app/quiz/{{item.id}}" class="item" ng-repeat="item in suggestedQuizes">
+        {{item.title}}
+        </a>
     </div>
 
   </ion-content>
