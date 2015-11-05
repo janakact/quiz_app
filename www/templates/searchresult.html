@@ -1,0 +1,13 @@
+<ion-view view-title="Search" >
+  <ion-content>
+    <label class="item item-input">
+      <i class="icon ion-search placeholder-icon"></i>
+      <input type="text" placeholder="Search for Quizzes" ng-model="searchText">
+    </label>
+    <ion-list>
+      <ion-item ng-repeat="quiz in quizes|filter:searchText" href="#/app/quiz/{{quiz.id}}">
+        {{quiz.title}}
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

@@ -204,7 +204,7 @@ angular.module('starter.controllers', [])
     //}
 })
 
-.controller('HomeCtrl', function($scope, $stateParams,socket) {
+.controller('HomeCtrl', function($scope, $location, $stateParams,socket) {
  // $scope.loadingModel.show();
   socket.emit('allQuiz',{});
   socket.on('showQuiz',function(data) {
@@ -224,6 +224,10 @@ angular.module('starter.controllers', [])
   //$scope.suggestedQuizes = [{title:'A/L Chemestry a sample paper',id:35},{title:"haha Lol paper",id:35}];
   $scope.recentAttempts = [{title:'A/L Chemestry sample paper',result:1,count:3},{title:"haha Lol paper",result:3,count:3},{title:'A/L Chemestry sample paper',result:3,count:3}]
 
+  $scope.goToSearch = function()
+  {
+    $location.path('/app/searchresult');
+  }
 
   })
 
@@ -256,6 +260,25 @@ angular.module('starter.controllers', [])
   })
 
   .controller('ResultCtrl', function($scope, $stateParams) {
+
+  })
+
+  .controller('SearchResultCtrl', function($scope, $stateParams,socket) {
+
+    socket.emit('allQuiz',{});
+    socket.on('showQuiz',function(data) {
+      if(typeof(data.QuizID) !== 'undefined' )   return;
+      $scope.data = data;
+      var quizes = [];
+
+      for(var i=0; i<data.length;i++)
+      {
+        quizes.push({title:data[i].Name,id:data[i].QuizID,time:data[i].Time});
+      }
+      $scope.quizes = quizes;
+      $scope.$apply();
+      $scope.loadingModel.hide();
+    });
 
   })
 
