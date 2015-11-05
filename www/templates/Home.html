@@ -3,10 +3,12 @@
 
     <div class="card">
       <div class="item item-energized">
-        Profile
+        <label class="item item-input">
+          <i class="icon ion-search placeholder-icon"></i>
+          <input type="text" placeholder="Search for Quizzes">
+        </label>
       </div>
     </div>
-
     <div class="card">
       <div class="item item-energized">
         Quiz Suggestions
@@ -14,6 +16,16 @@
         <a href="#/app/quiz/{{item.id}}" class="item" ng-repeat="item in suggestedQuestions">
         {{item.title}}
         </a>
+    </div>
+
+
+    <div class="card">
+      <div class="item item-energized">
+        Results for recent attempts
+      </div>
+      <div class="item" ng-repeat="item in recentAttempts">
+        {{item.title}}<span class="badge badge-balanced">{{item.result}}/{{item.count}}</span>
+      </div>
     </div>
 
   </ion-content>

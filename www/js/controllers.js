@@ -33,6 +33,7 @@ angular.module('starter.controllers', ['ionic.service.platform', 'ionic.ui.conte
     $scope.modal.show();
   };
 
+
   // Perform the login action when the user submits the login form
   //$scope.doLogin = function() {
   //  console.log('Doing login', $scope.loginData);
@@ -119,20 +120,32 @@ angular.module('starter.controllers', ['ionic.service.platform', 'ionic.ui.conte
   socket.emit('getQuiz',{qid:$scope.quizId});
 
 
-  // Create the login modal that we will use later
+  // ------------------Models
   $ionicModal.fromTemplateUrl('templates/result.html', {
     scope: $scope
   }).then(function(modal) {
     $scope.resultModal = modal;
+  });
+  // Create the login modal that we will use later
+  $ionicModal.fromTemplateUrl('templates/loading.html', {
+    scope: $scope
+  }).then(function(modal) {
+    $scope.loadingModel = modal;
+    $scope.loadingModel.show();
+
   });
 
 
 
     socket.on('showQuiz',function(data)
     {
+      if(data.QuizID!=$scope.quizId) return;
       ///Add retur if ids not match
       $scope.data = data;
       $scope.questions = [];
+      $scope.time = data.Time;
+      $scope.quizTitle = data.Name;
+      $scope.quizCourse = data.CourseID;
       var questions = data.Questions;
       for(var i=0; i<questions.length;i++)
       {
@@ -151,6 +164,7 @@ angular.module('starter.controllers', ['ionic.service.platform', 'ionic.ui.conte
           $interval.cancel($scope.timeFunction);
         }
       },1000);
+      $scope.loadingModel.hide();
 
     });
 
@@ -204,7 +218,8 @@ angular.module('starter.controllers', ['ionic.service.platform', 'ionic.ui.conte
 
 .controller('HomeCtrl', function($scope, $stateParams) {
 
-  $scope.suggestedQuestions = [{title:'A/L Chemestry sample paper',id:0},{title:"haha Lol paper",id:1}];
+  $scope.suggestedQuestions = [{title:'A/L Chemestry a sample paper',id:35},{title:"haha Lol paper",id:35}];
+  $scope.recentAttempts = [{title:'A/L Chemestry sample paper',result:1,count:3},{title:"haha Lol paper",result:3,count:3},{title:'A/L Chemestry sample paper',result:3,count:3}]
 
 
   })
@@ -274,3 +289,5 @@ angular.module('starter.controllers', ['ionic.service.platform', 'ionic.ui.conte
       });
     }
   });
+
+
