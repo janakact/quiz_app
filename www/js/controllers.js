@@ -100,6 +100,8 @@ angular.module('starter.controllers', [])
     { title: 'Introduction to Biology', id: 1 },
     { title: 'Graph Theory', id: 2 },
     { title: 'Linear Algebra', id: 3 },
+    { title: 'Calculus', id: 4 },
+    { title: 'Differential equations', id: 5 }
   ];
 })
 
