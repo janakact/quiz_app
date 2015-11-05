@@ -75,13 +75,24 @@ angular.module('starter.controllers', [])
   })
 
 .controller('QuizlistCtrl', function($scope) {
-  $scope.quizes = [
-    { title: 'Say Hello', id: 1 },
-    { title: 'Print the String', id: 2 },
-    { title: 'What Ever', id: 3 },
-    { title: 'Play with integers', id: 4 },
-    { title: 'Time Game', id: 5 },
-    { title: 'Cowbell', id: 6 }
+    $scope.quizes = [
+      { title: 'Say Hello', id: 1 },
+      { title: 'Print the String', id: 2 },
+      { title: 'IPv4', id: 3 },
+      { title: 'Play with integers', id: 4 },
+      { title: 'Time Game', id: 5 },
+      { title: 'LAN', id: 6 }
+    ];
+  })
+
+.controller('CourseCtrl', function($scope) {
+  $scope.courses = [
+    { title: 'Database Management Systems', id: 1 },
+    { title: 'Computer Networks', id: 2 },
+    { title: 'Data Mining', id: 3 },
+    { title: 'Software Engineering', id: 4 },
+    { title: 'Photography', id: 5 },
+    { title: 'Technical Writing', id: 6 }
   ];
 })
 
