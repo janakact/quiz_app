@@ -1,17 +1,39 @@
 <ion-view view-title="Courses" >
   <ion-content>
-    <div class="page-header">
-      <h5 class="text-center"><b>My Courses</b></h5>
+
+    <!-- section to show courses given from the institutes-->
+    <div class="card">
+      <div class="item item-energized">
+        <h2 class="text-center"><b>My Courses</b></h2>
+      </div>
+      <ion-list>
+        <ion-item ng-repeat="course in courses" href="#/app/courses/{{course.id}}">
+          {{course.title}}
+        </ion-item>
+      </ion-list>
     </div>
 
-    <ion-list>
-      <ion-item ng-repeat="course in courses" href="#/app/courses/{{course.id}}">
-        {{course.title}}
-      </ion-item>
-    </ion-list>
 
-    <div class="page-header">
-      <h5 class="text-center"><b>Subscribed Public Courses</b></h5>
+
+    <!-- section to show courses subscribed from public courses-->
+    <div class="card">
+      <div class="item item-energized">
+        <h2 class="text-center"><b>Subscribed Public Courses</b></h2>
+      </div>
+
+      <ion-list>
+        <ion-item ng-repeat="course in pubCourses" href="#/app/courses/{{course.id}}">
+          {{course.title}}
+        </ion-item>
+
+        <div class="ion-item" style="float:none; text-align: center">
+          <button class="button button-small button-energized">
+            <i class="icon ion-ios-plus-outline"></i>
+          </button>
+        </div>
+
+      </ion-list>
     </div>
+
   </ion-content>
 </ion-view>
