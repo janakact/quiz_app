@@ -1,0 +1,17 @@
+<ion-view view-title="Courses" >
+  <ion-content>
+    <div class="page-header">
+      <h5 class="text-center"><b>My Courses</b></h5>
+    </div>
+
+    <ion-list>
+      <ion-item ng-repeat="course in courses" href="#/app/courses/{{course.id}}">
+        {{course.title}}
+      </ion-item>
+    </ion-list>
+
+    <div class="page-header">
+      <h5 class="text-center"><b>Subscribed Public Courses</b></h5>
+    </div>
+  </ion-content>
+</ion-view>

@@ -5,7 +5,11 @@
   <ion-content>
     <div class="card">
       <div class="item item-energized">
-        {{result}}
+      Results
+      </div>
+      <div class="item ">
+        {{result}} / {{questions.length}} Questions are correct.
+        <button style="float: right;" class="button button-small button-energized" ng-click="closeResults()">Close</button>
       </div>
     </div>
   </ion-content>
