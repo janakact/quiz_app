@@ -1,0 +1,60 @@
+<ion-view view-title="{{quizTitle}}">
+  <ion-content>
+    <div class="card">
+      <div class="item item-energized">
+
+        {{qIndex+1}}/{{questions.length}}
+ | Time Remaining
+      {{((time-timeElapsed)/60-0.5)|number : 0 }}: {{(time-timeElapsed)%60}}
+
+        <span class="ion-clock"></span>
+        <button class="button button-small button-balanced item-right" style="float:right;"  ng-click="submit()">
+          Submit
+      </button>
+          </span>
+
+      </div>
+      <div class="item item-text-wrap">
+
+        {{questions[qIndex].description}}<br><br>
+    <!--Opptions for the question-->
+
+        <div class="list">
+
+          <label class="item item-radio" ng-repeat="option in questions[qIndex].options">
+            <input type="radio" name="group" ng-model="questions[qIndex].selection" value="{{option}}" >
+            <div class="item-content">
+              {{option}}
+            </div>
+            <i class="radio-icon ion-checkmark balanced"></i>
+          </label>
+
+        </div>
+
+
+
+      </div>
+      <div class="item">
+        <button class="button button-energized" ng-show="qIndex >0" ng-click="prev()">
+          <span class="ion-arrow-left-a"></span>
+      </button>
+
+
+        <button class="button button-energized item-right" style="float:right;" ng-show="qIndex<questions.length-1" ng-click="next()">
+          <span class="ion-arrow-right-a"></span>
+        </button>
+
+        <!--<button class="button button-balanced item-right" style="float:right;" ng-show="qIndex==questions.length-1" ng-click="submit()">-->
+          <!--<span class="ion-checkmark"></span>-->
+        <!--</button>-->
+      </div>
+    </div>
+    <!--<ul>-->
+      <!--<li ng-repeat="question in questions">-->
+        <!--<label>-->
+          <!--{{question.selection}}</label>-->
+      <!--</li>-->
+    <!--</ul>-->
+
+  </ion-content>
+</ion-view>
