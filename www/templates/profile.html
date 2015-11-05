@@ -1,32 +1,54 @@
 <ion-view view-title="Profile">
   <ion-content>
+    <!-- part of code taken from http://codepen.io/nathvarun/pen/eAbCK/-->
     <div ng-controller="ProfileCtrl">
-      <div class="bar bar-header bar-danger">
-        <button class="button button-icon"><i class="icon-person-add"></i></button>
-        <h1 class="title">Me</h1>
-        <button class="button button-icon"><i class="icon-gear-b"></i></button>
-      </div>
-
       <div has-header="true">
         <div id="profile-bg"></div>
         <div id="content">
           <div id="profile-info">
-            <img id="profile-image" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/94311/me.png">
-            <h3 id="profile-name">Max</h3>
-            <span id="profile-description">Co-creator of <a href="http://twitter.com/ionicframework">@ionicframework</a>, founder of
-            <a href="http://twitter.com/driftyco">@driftyco</a></span>
+            <img id="profile-image" src="../resources/Hansika.PNG">
+            <h3 id="profile-name">Hansika Galappaththi</h3>
+            <span id="profile-description">Student at Vijayaba Central College, Hungama</span>
           </div>
-          <ion-list>
-            <ion-item ng-repeat="post in posts">
-              <img class="post-profile-image" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/94311/me.png">
-              {{post.text}}
-              <div class="post-time">{{post.created_at | relativets }}</div>
-              <div class="post-options">
-                <i class="icon-reply"></i>
-                <i class="icon-shuffle"></i>
+          <div class="container">
+            <ul class="list">
+              <li class="item">Age
+                <span class="badge badge-balanced">17 years</span>
+              </li>
+              <li class="item">Joined on
+                <span class="badge badge-balanced"><small>06/11/2015</small></span>
+              </li>
+            </ul>
+            <div class="card">
+              <div class="item item-energized">
+                <h2 class="text-center"><b>Institutes</b></h2>
               </div>
-            </ion-item>
-          </ion-list>
+              <ion-list>
+                <ion-item>
+                  Vijayaba Central College, Hungama
+                </ion-item>
+                <ion-item>
+                  Shakthi Institute, Matara
+                </ion-item>
+              </ion-list>
+            </div>
+            <div class="card">
+              <div class="item item-energized">
+                <h2 class="text-center"><b>Interests</b></h2>
+              </div>
+              <ion-list>
+                <ion-item>
+                  Information Technology
+                </ion-item>
+                <ion-item>
+                  Biology
+                </ion-item>
+                <ion-item>
+                  Mathematics
+                </ion-item>
+              </ion-list>
+            </div>
+          </div>
         </div>
       </div>
 
