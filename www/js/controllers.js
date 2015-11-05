@@ -32,7 +32,14 @@ angular.module('starter.controllers', [])
     socket.emit('logout');
     $scope.modal.show();
   };
+  // Create the login modal that we will use later
+  $ionicModal.fromTemplateUrl('templates/loading.html', {
+    scope: $scope
+  }).then(function(modal) {
+    $scope.loadingModel = modal;
+    $scope.loadingModel.show();
 
+  });
 
   // Perform the login action when the user submits the login form
   //$scope.doLogin = function() {
@@ -113,14 +120,7 @@ angular.module('starter.controllers', [])
   }).then(function(modal) {
     $scope.resultModal = modal;
   });
-  // Create the login modal that we will use later
-  $ionicModal.fromTemplateUrl('templates/loading.html', {
-    scope: $scope
-  }).then(function(modal) {
-    $scope.loadingModel = modal;
-    $scope.loadingModel.show();
 
-  });
 
 
 
@@ -204,7 +204,7 @@ angular.module('starter.controllers', [])
 })
 
 .controller('HomeCtrl', function($scope, $stateParams,socket) {
-
+ // $scope.loadingModel.show();
   socket.emit('allQuiz',{});
   socket.on('showQuiz',function(data) {
     if(typeof(data.QuizID) !== 'undefined' )   return;
@@ -217,6 +217,7 @@ angular.module('starter.controllers', [])
     }
     $scope.suggestedQuizes = quizes;
     $scope.$apply();
+    $scope.loadingModel.hide();
     });
   //Dumy data
   //$scope.suggestedQuizes = [{title:'A/L Chemestry a sample paper',id:35},{title:"haha Lol paper",id:35}];
@@ -227,6 +228,7 @@ angular.module('starter.controllers', [])
 
 
   .controller('QuizlistCtrl', function($scope,socket) {
+    $scope.loadingModel.show();
     socket.emit('allQuiz',{});
     socket.on('showQuiz',function(data) {
       if(typeof(data.QuizID) !== 'undefined' )   return;
@@ -239,6 +241,7 @@ angular.module('starter.controllers', [])
       }
       $scope.quizes = quizes;
       $scope.$apply();
+      $scope.loadingModel.hide();
     });
 
     //$scope.quizes = [
