@@ -131,9 +131,13 @@ angular.module('starter.controllers', [])
 
     socket.on('showQuiz',function(data)
     {
+      if(data.QuizID!=$scope.quizId) return;
       ///Add retur if ids not match
       $scope.data = data;
       $scope.questions = [];
+      $scope.time = data.Time;
+      $scope.quizTitle = data.Name;
+      $scope.quizCourse = data.CourseID;
       var questions = data.Questions;
       for(var i=0; i<questions.length;i++)
       {
