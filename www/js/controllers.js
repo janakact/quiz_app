@@ -1,6 +1,6 @@
 angular.module('starter.controllers', [])
 
-.controller('AppCtrl', function($scope, $ionicModal, $timeout, socket) {
+.controller('AppCtrl', function($scope, $ionicModal, $timeout, $location, socket) {
 
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
@@ -22,6 +22,13 @@ angular.module('starter.controllers', [])
    // $scope.modal.show();
   });
 
+ $scope.getQuiz = function(id)
+ {
+   socket.emit('getQuiz',{qid:id});
+   $location.path('/app/quiz/'+id);
+
+ };
+
   // Triggered in the login modal to close it
   $scope.login = function() {
     socket.emit('login',{'username':$scope.loginData.username, 'password':$scope.loginData.password});
@@ -40,6 +47,11 @@ angular.module('starter.controllers', [])
     $scope.loadingModel.show();
 
   });
+  $scope.cancelLoading = function()
+  {
+    $scope.loadingModel.hide();
+    $location.path('/');
+  }
 
   // Perform the login action when the user submits the login form
   //$scope.doLogin = function() {
@@ -63,6 +75,12 @@ angular.module('starter.controllers', [])
       $scope.stateMessage = "Login Failed!";
     //$scope.modal.show();
   });
+  //socket.on('showQuiz',function(data) {
+  //  if (data.yourRate != undefined) {
+  //    $scope.rate = data.yourRate;
+  //  }
+  //});
+
 })
 
 .controller("progressBar",function($scope,$timeout,Authorization){
@@ -126,32 +144,40 @@ angular.module('starter.controllers', [])
 
     socket.on('showQuiz',function(data)
     {
-      if(data.QuizID!=$scope.quizId) return;
-      ///Add retur if ids not match
-      $scope.data = data;
-      $scope.questions = [];
-      $scope.time = data.Time;
-      $scope.quizTitle = data.Name;
-      $scope.quizCourse = data.CourseID;
-      var questions = data.Questions;
-      for(var i=0; i<questions.length;i++)
+      $scope.rate = 0;
+      if(data.yourRate != undefined)
       {
-        q = questions[i];
-        $scope.questions.push({description:q.Q ,options: q.O, answer: q.A});
+        $scope.rate = 1;
       }
 
-      //Statr timer
-      $scope.timeElapsed = 0;
-      $scope.timeFunction = $interval(function(){
-        if($scope.timeElapsed<$scope.time){
-          $scope.timeElapsed++;
+      if(data.QuizID!=$scope.quizId) return;
+        ///Add retur if ids not match
+        $scope.data = data;
+        $scope.questions = [];
+        $scope.time = data.Time;
+        $scope.quizTitle = data.Name;
+        $scope.quizCourse = data.CourseID;
+        var questions = data.Questions;
+        for (var i = 0; i < questions.length; i++) {
+          q = questions[i];
+          $scope.questions.push({description: q.Q, options: q.O, answer: q.A});
         }
-        else {
-          $scope.submit();
-          $interval.cancel($scope.timeFunction);
-        }
-      },1000);
-      $scope.loadingModel.hide();
+
+        //Statr timer
+        $scope.timeElapsed = 0;
+        $scope.timeFunction = $interval(function () {
+          if ($scope.timeElapsed < $scope.time) {
+            $scope.timeElapsed++;
+          }
+          else {
+            $scope.submit();
+            $interval.cancel($scope.timeFunction);
+          }
+        }, 1000);
+      $scope.$apply();
+        $scope.loadingModel.hide();
+
+
 
     });
 
@@ -177,7 +203,8 @@ angular.module('starter.controllers', [])
         if($scope.questions[i].selection==$scope.questions[i].answer)
           result++;
       }
-      socket.emit('sendResult',{result:result,qid:$scope.quizId,count:$scope.questions.length});
+
+      socket.emit('sendResults',{result:result,qid:$scope.quizId,count:$scope.questions.length});
       $scope.result = result;
       $interval.cancel($scope.timeFunction);
       $scope.resultModal.show();
@@ -214,7 +241,7 @@ angular.module('starter.controllers', [])
 
     for(var i=0; i<data.length;i++)
     {
-          quizes.push({title:data[i].Name,id:data[i].QuizID,time:data[i].Time});
+      quizes.push({title:data[i].Name,id:data[i].QuizID,time:data[i].Time,courseId:data[i].CourseID});
     }
     $scope.suggestedQuizes = quizes;
     $scope.$apply();
@@ -235,7 +262,7 @@ angular.module('starter.controllers', [])
 
 
   .controller('QuizlistCtrl', function($scope,socket) {
-    $scope.loadingModel.show();
+   // $scope.loadingModel.show();
     socket.emit('allQuiz',{});
     socket.on('showQuiz',function(data) {
       if(typeof(data.QuizID) !== 'undefined' )   return;
@@ -244,7 +271,7 @@ angular.module('starter.controllers', [])
 
       for(var i=0; i<data.length;i++)
       {
-        quizes.push({title:data[i].Name,id:data[i].QuizID,time:data[i].Time});
+        quizes.push({title:data[i].Name,id:data[i].QuizID,time:data[i].Time,courseId:data[i].CourseID});
       }
       $scope.quizes = quizes;
       $scope.$apply();
@@ -293,3 +320,36 @@ angular.module('starter.controllers', [])
 
     return myIoSocket;
   })
+
+  .directive('focus',
+
+    function($timeout) {
+
+      return {
+
+        scope : {
+
+          trigger : '@focus'
+
+        },
+
+        link : function(scope, element) {
+
+          scope.$watch('trigger', function(value) {
+
+            if (value === "true") {
+
+              $timeout(function() {
+
+                element[0].focus();
+
+              });
+            }
+          });
+        }
+
+      };
+
+    }
+
+  );

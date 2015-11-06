@@ -1,17 +1,16 @@
 <ion-view view-title="{{quizTitle}}">
   <ion-content>
     <div class="card">
-      <div class="item item-energized">
-
+      <div class="item item-stable">
+<span class="badge badge-energized" style="right:initial;left:32px;">
         {{qIndex+1}}/{{questions.length}}
- | Time Remaining
+  </span>
+       #
+<span class="badge badge-assertive" >
       {{((time-timeElapsed)/60-0.5)|number : 0 }}: {{(time-timeElapsed)%60}}
+   </span>
 
-        <span class="ion-clock"></span>
-        <button class="button button-small button-balanced item-right" style="float:right;"  ng-click="submit()">
-          Submit
-      </button>
-          </span>
+
 
       </div>
       <div class="item item-text-wrap">
@@ -48,6 +47,14 @@
           <!--<span class="ion-checkmark"></span>-->
         <!--</button>-->
       </div>
+
+
+    <div class="item item-stable">
+      <button class="button button-balanced item-right"   ng-click="submit()">
+        Submit
+      </button>
+      </div>
+    </div>
     </div>
     <!--<ul>-->
       <!--<li ng-repeat="question in questions">-->
